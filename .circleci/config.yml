@@ -18,7 +18,7 @@ jobs:
           working_directory: ~/repo/web
       - save_cache:
           paths:
-            - node_modules
+            - web/node_modules
           key: deps-{{ checksum "web/package.json" }}
       - run:
           name: build
