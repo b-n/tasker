@@ -1,0 +1,49 @@
+service: tasker
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  memorySize: 128
+  stage: dev
+  region: eu-central-1
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:PutItem
+        - dynamodb:Query
+      Resource: "arn:aws:dynamodb:eu-central-1:*:*"
+  environment:
+    DYNAMODB_TABLE: ${self:service}-${self:provider.stage}
+
+functions:
+  iot:
+    handler: handler.iot
+    events:
+      - iot:
+          sql: "select timestamp, thing, oldProject, newProject from 'project-update'"
+  thing:
+    handler: handler.thing
+    events:
+      - http:
+          path: thing/{thing}
+          method: get
+          cors: true
+
+resources:
+  Resources:
+    TaskDetailTable:
+      Type: "AWS::DynamoDB::Table"
+      DeletionPolicy: "Retain"
+      Properties:
+        TableName: ${self:provider.environment.DYNAMODB_TABLE}
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
