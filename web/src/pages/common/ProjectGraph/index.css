@@ -10,3 +10,13 @@ line.tick {
 .y-axis .tick-label {
   font-size: 14px;
 }
+
+.x-axis .gridline {
+  stroke: #ddd;
+  stroke-width: 1px;
+}
+
+.y-axis .gridline {
+  stroke: #eee;
+  stroke-width: 1px;
+}

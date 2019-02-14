@@ -33,7 +33,7 @@ const XAxis = (props) => {
           </Text>
           {gridline === undefined
             ? null
-            : (<Line x1={x} x2={x} y1={-gridline} y2={0} stroke="lightgrey" strokeWidth={1} className="gridline"/>)}
+            : (<Line x1={x} x2={x} y1={-gridline} y2={0} className="gridline"/>)}
         </Fragment>
         );
       })}

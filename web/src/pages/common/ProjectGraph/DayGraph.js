@@ -34,7 +34,7 @@ const DayGraph = (props) => {
       <XAxis
         scale={xScale}
         transform={{translate: [0, 100]}}
-        gridline={60}
+        gridline={100}
         className="x-axis"
       />
       <YAxis
